@@ -1,0 +1,103 @@
+<project name="punchcheating" default="package" basedir=".">
+      <property name="project-name" value="punch"/>
+      <property name="lib" value="lib"/>
+      <property name="src" value="src"/>
+	  <property name="java.code.dir" value="${src}/main/java"/>
+	  <property name="resources.dir" value="${src}/main/resources"/>
+	  <property name="target.dir" value="target"/>
+	  <property name="build.dir" value="build"/>
+	  <property name="release.dir" value="release"/>
+      <property name="target.classes" value="${target.dir}/classes"/>
+	  <property name="build.conf" value="${build.dir}/conf"/>
+	  <property name="build.lib" value="${build.dir}/lib"/>
+      <property name="jar-file-name" value="${project-name}.jar"/>
+	  <property name="readme.file" value="README.TXT"/>
+	  <property name="config.file" value="config.properties"/>
+      <path id="ThirdpartLibID">
+            <fileset dir="${lib}">
+                  <include name="*.jar"/>
+            </fileset>
+      </path>
+      <manifestclasspath property="ThirdpartLib.list" jarfile="${lib}/${jar-file-name}">
+			<classpath refid="ThirdpartLibID"/>
+      </manifestclasspath>
+      <target name="prepare" >
+            <mkdir dir="${target.dir}" />
+			<mkdir dir="${target.classes}" />
+			<mkdir dir="${build.dir}" />
+			<mkdir dir="${build.conf}" />
+			<mkdir dir="${build.lib}" />
+			<mkdir dir="${release.dir}" />
+      </target>
+
+      <target name="clean" >
+            <delete dir="${target.dir}" />
+			<delete dir="${build.dir}" />
+			<delete dir="${release.dir}" />
+      </target>
+ 
+      <target name="compile" depends="clean,prepare">
+			<echo message="Compiling the source code!"/>
+            <javac
+                  srcdir="${java.code.dir}"
+                  destdir="${target.classes}"
+                  deprecation="true"
+                  failonerror="true" debug="true"
+                  >
+                  <classpath refid="ThirdpartLibID"/>
+            </javac>
+      </target>
+
+      <target name="package"  description="running" depends="jar">
+		    <copy todir="${build.lib}">
+				<fileset dir="${lib}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${target.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</copy>
+		    <copy todir="${build.dir}">
+				<fileset dir="${resources.dir}">
+					<include name="*.bat" />
+				</fileset>
+			</copy>
+		    <copy todir="${build.dir}">
+				<fileset dir="${resources.dir}">
+					<include name="${readme.file}" />
+				</fileset>
+			</copy>
+		    <copy todir="${build.conf}">
+				<fileset dir="${resources.dir}">
+					<include name="${config.file}" />
+				</fileset>
+			</copy>
+		    <zip destfile="${release.dir}/${project-name}_bin.zip">
+				<zipfileset dir="${build.dir}" prefix="${project-name}"/>
+		    </zip>
+		    <zip destfile="${release.dir}/${project-name}_src.zip">
+				<zipfileset dir="${src}" prefix="${src}"/>
+				<zipfileset dir="${lib}" prefix="${lib}"/>
+				<fileset dir=".">
+					<include name="build.xml"/>
+				</fileset>
+		    </zip>
+      </target>
+	  
+      <target name="run"  description="running" depends="package">
+            <java jar="${build.lib}/${jar-file-name}" fork="true" maxmemory="256m" classpath="${ThirdpartLib.list}"/>
+      </target>
+
+      <target name="jar" depends="compile">
+            <jar destfile="${target.dir}/${jar-file-name}" basedir="${target.classes}">
+                  <manifest>
+                        <attribute name="Main-Class" value="com.run.cheating.punch.Main"/>
+                        <attribute name="Class-Path" value="${ThirdpartLib.list}"/>
+                  </manifest>
+				  <fileset dir="${resources.dir}">
+						<include name="log4j.properties"/>
+				  </fileset>
+            </jar>
+
+      </target>
+</project>
