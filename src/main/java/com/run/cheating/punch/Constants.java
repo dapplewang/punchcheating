@@ -15,4 +15,6 @@ public class Constants {
   public static final String PM_OUT = "18:30";
 
   public static final int RANDOM_TIME_RANGE = 10*60*1000;
+  public static final String CHECK_LOGIN_KEY_WORD = "";
+  public static final String CHECK_PUNCH_KEY_WORD = "";
 }

@@ -8,6 +8,7 @@ public class Main {
    * @param args
    */
   public static void main(final String[] args) {
+    log.debug("Start punch cheating.....");
     log.info("");
     log.info("****************************************************************");
     log.info(" Punch Cheating is runing, do not close this window, good luck!");

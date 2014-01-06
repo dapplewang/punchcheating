@@ -50,6 +50,8 @@ public class ConfigProperties {
           conf.getVacationDays().add(day);
         }
       }
+      conf.setCheckLoginKeyWords(PropertiesUtils.null2Default(prop.getProperty("checkLoginKeyWords"),Constants.CHECK_LOGIN_KEY_WORD));
+      conf.setCheckPunchKeyWords(PropertiesUtils.null2Default(prop.getProperty("checkPunchKeyWords"),Constants.CHECK_PUNCH_KEY_WORD));
     }
     catch (final Exception e) {
       log.error(e);

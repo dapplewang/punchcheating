@@ -40,10 +40,11 @@ public class PunchTask extends TimerTask {
       final PunchAction punchAction = new PunchAction(config);
       final HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
       final CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
-      punchAction.login(closeableHttpClient);
-      punchAction.punch(closeableHttpClient, punchType.getValue());
+      if(punchAction.login(closeableHttpClient)){
+        punchAction.punch(closeableHttpClient, punchType.getValue());
+        log.info("punch " + punchType + ",ok! Date:" + DateHelper.getLogDate());
+      }
       closeableHttpClient.close();
-      log.info("punch " + punchType + ",ok! Date:" + DateHelper.getLogDate());
     }
     catch (final Exception e) {
       log.error("punch error!", e);

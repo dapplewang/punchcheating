@@ -15,6 +15,8 @@ public class Configuration {
   private List<String> workingDays;
   private List<String> vacationDays;
   private int randomTimeRange;
+  private String checkLoginKeyWords;
+  private String checkPunchKeyWords;
 
   public String getUserName() {
     return userName;
@@ -83,6 +85,18 @@ public class Configuration {
   }
   public void setRandomTimeRange(final int randomTimeRange) {
     this.randomTimeRange = randomTimeRange;
+  }
+  public String getCheckLoginKeyWords() {
+    return checkLoginKeyWords;
+  }
+  public void setCheckLoginKeyWords(final String checkLoginKeyWords) {
+    this.checkLoginKeyWords = checkLoginKeyWords;
+  }
+  public String getCheckPunchKeyWords() {
+    return checkPunchKeyWords;
+  }
+  public void setCheckPunchKeyWords(final String checkPunchKeyWords) {
+    this.checkPunchKeyWords = checkPunchKeyWords;
   }
 
 }
