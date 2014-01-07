@@ -41,7 +41,7 @@ public class PunchAction {
     String resopnseStr = "";
     if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
       resopnseStr = IOUtils.toString(new InputStreamReader(response.getEntity().getContent(),"UTF-8"));
-      if(resopnseStr.toString().startsWith(config.getCheckLoginKeyWords())){
+      if(resopnseStr.toString().contains(config.getCheckLoginKeyWords())){
         result = true;
       }
       log.debug("Login response:"+resopnseStr);
@@ -74,7 +74,7 @@ public class PunchAction {
       log.warn("punch faild!");
       log.warn("=======================================");
     }
-    if(resopnseStr.startsWith(config.getCheckPunchKeyWords())){
+    if(resopnseStr.contains(config.getCheckPunchKeyWords())){
       log.debug("Punch response:"+resopnseStr);
     }
     else{
