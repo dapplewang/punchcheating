@@ -20,7 +20,7 @@ public class Main {
     printWelcomeInfo();
     final PunchManager t = new PunchManager();
     t.run();
-    reloadWhenConfigFileChanged(t);
+    restartWhenConfigFileChanged(t);
   }
 
   private static void printWelcomeInfo(){
@@ -32,7 +32,7 @@ public class Main {
     log.info("");
   }
 
-  private static void reloadWhenConfigFileChanged(final PunchManager t) throws IOException, InterruptedException{
+  private static void restartWhenConfigFileChanged(final PunchManager t) throws IOException, InterruptedException{
     final String watchDir = PropertiesUtils.getPropertiesFileDir();
     final WatchService watchService=FileSystems.getDefault().newWatchService();
     Paths.get(watchDir).register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
