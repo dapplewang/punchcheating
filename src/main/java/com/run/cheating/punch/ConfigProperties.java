@@ -57,6 +57,11 @@ public class ConfigProperties {
       log.error(e);
     }
   }
+
+  public void reloadConfiguration(){
+    createConfiguration();
+  }
+
   /**
    * @param args
    */

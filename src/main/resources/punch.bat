@@ -10,7 +10,7 @@ goto :eof
 SET CLASSPATH=%CLASSPATH%;
 SET CLASSPATH
 
-SET ReqVer=1.6
+SET ReqVer=1.7
 FOR /F "tokens=1,2 delims=." %%A IN ("%ReqVer%") DO (
     SET ReqMajorVer=%%A
     SET ReqMinorVer=%%B

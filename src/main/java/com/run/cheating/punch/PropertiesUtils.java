@@ -16,8 +16,7 @@ public class PropertiesUtils {
   private static final Logger log = Logger.getLogger(PropertiesUtils.class);
 
   public static Properties getPropertiesFile() throws UnsupportedEncodingException, FileNotFoundException {
-    final String projectPath = System.getProperty("user.dir");
-    final InputStream in = new FileInputStream(projectPath+File.separator+Constants.CONFIG_PROPERTIES);
+    final InputStream in = new FileInputStream(getPropertiesFilePath());
     final Properties prop = new Properties();
     try {
       prop.load(new InputStreamReader(in,"UTF-8"));
@@ -58,5 +57,18 @@ public class PropertiesUtils {
     return result;
   }
 
+  public static String getPropertiesFilePath(){
+    final String projectPath = System.getProperty("user.dir");
+    return projectPath+File.separator+Constants.CONFIG_PROPERTIES;
+  }
 
+  public static String getPropertiesFileDir(){
+    final File file = new File(getPropertiesFilePath());
+    return file.getParent();
+  }
+
+  public static String getPropertiesFileName(){
+    final File file = new File(getPropertiesFilePath());
+    return file.getName();
+  }
 }

@@ -15,10 +15,10 @@ public class PunchManager {
   public static final Logger log = Logger.getLogger(PunchManager.class);
 
   private static final long PERIOD_DAY = 24 * 60 * 60 * 1000;
-  private final Date punchInAMDate;
-  private final Date punchOutAMDate;
-  private final Date punchInPMDate;
-  private final Date punchOutPMDate;
+  private  Date punchInAMDate;
+  private  Date punchOutAMDate;
+  private  Date punchInPMDate;
+  private  Date punchOutPMDate;
   private Timer punchInAMTimer;
   private Timer punchOutAMTimer;
   private Timer punchInPMTimer;
@@ -27,14 +27,9 @@ public class PunchManager {
   private PunchTask punchOutAMTask;
   private PunchTask punchInPMTask;
   private PunchTask punchOutPMTask;
-  private final Configuration config;
+  private Configuration config;
 
   public PunchManager() {
-    config=ConfigProperties.getInstance().getConfiguration();
-    punchInAMDate = getPunchDate(config.getPunchInAMTime());
-    punchOutAMDate = getPunchDate(config.getPunchOutAMTime());
-    punchInPMDate = getPunchDate(config.getPunchInPMTime());
-    punchOutPMDate = getPunchDate(config.getPunchOutPMTime());
   }
 
   public void run() {
@@ -42,6 +37,12 @@ public class PunchManager {
     punchOutAMTimer = new Timer();
     punchInPMTimer = new Timer();
     punchOutPMTimer = new Timer();
+    ConfigProperties.getInstance().reloadConfiguration();
+    config=ConfigProperties.getInstance().getConfiguration();
+    punchInAMDate = getPunchDate(config.getPunchInAMTime());
+    punchOutAMDate = getPunchDate(config.getPunchOutAMTime());
+    punchInPMDate = getPunchDate(config.getPunchInPMTime());
+    punchOutPMDate = getPunchDate(config.getPunchOutPMTime());
     punchInAMTask = new PunchTask(PunchType.PUNCH_IN_AM,config);
     punchOutAMTask = new PunchTask(PunchType.PUNCH_OUT_AM,config);
     punchInPMTask = new PunchTask(PunchType.PUNCH_IN_PM,config);
@@ -50,10 +51,26 @@ public class PunchManager {
     log.info("The next punch out datetime(AM):"+DateHelper.formatDate(punchOutAMDate));
     log.info("The next punch in datetime(PM):"+DateHelper.formatDate(punchInPMDate));
     log.info("The next punch out datetime(PM):"+DateHelper.formatDate(punchOutPMDate));
-    punchInAMTimer.scheduleAtFixedRate(punchInAMTask, punchInAMDate, PERIOD_DAY);
-    punchOutAMTimer.scheduleAtFixedRate(punchOutAMTask, punchOutAMDate, PERIOD_DAY);
-    punchInPMTimer.scheduleAtFixedRate(punchInPMTask, punchInPMDate, PERIOD_DAY);
-    punchOutPMTimer.scheduleAtFixedRate(punchOutPMTask, punchOutPMDate, PERIOD_DAY);
+    try{
+      punchInAMTimer.schedule(punchInAMTask, punchInAMDate, PERIOD_DAY);
+      punchOutAMTimer.schedule(punchOutAMTask, punchOutAMDate, PERIOD_DAY);
+      punchInPMTimer.schedule(punchInPMTask, punchInPMDate, PERIOD_DAY);
+      punchOutPMTimer.schedule(punchOutPMTask, punchOutPMDate, PERIOD_DAY);
+    }
+    catch(final IllegalStateException e){}
+
+  }
+
+  public void stop(){
+    punchInAMTimer.cancel();
+    punchOutAMTimer.cancel();
+    punchInPMTimer.cancel();
+    punchOutPMTimer.cancel();
+  }
+
+  public void restart(){
+    stop();
+    run();
   }
 
   private Date addDay(final Date date, final int num) {
