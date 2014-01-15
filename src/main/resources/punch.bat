@@ -1,6 +1,6 @@
 @ECHO OFF
 
-@ECHO Punch Cheating V1.0
+@ECHO Punch Cheating V1.2
 FOR %%F IN (lib\*.jar) DO call :addcp %%F
 goto extlibe
 :addcp
