@@ -14,6 +14,11 @@ public class Constants {
   public static final String PM_IN = "12:30";
   public static final String PM_OUT = "18:30";
 
+  public static final String STOP_RETRY_AM_IN = "09:30";
+  public static final String STOP_RETRY_AM_OUT = "12:59";
+  public static final String STOP_RETRY_PM_IN = "12:59";
+  public static final String STOP_RETRY_PM_OUT = "23:59";
+
   public static final int RANDOM_TIME_RANGE = 10*60*1000;
   public static final String CHECK_LOGIN_KEY_WORD = "department";
   public static final String CHECK_PUNCH_KEY_WORD = "type";

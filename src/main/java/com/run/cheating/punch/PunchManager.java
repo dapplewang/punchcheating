@@ -13,8 +13,9 @@ import com.run.cheating.utils.DateHelper;
 public class PunchManager {
 
   public static final Logger log = Logger.getLogger(PunchManager.class);
-
-  private static final long PERIOD_DAY = 24 * 60 * 60 * 1000;
+  public static final long PERIOD_MIN = 60 * 1000;
+  public static final long PERIOD_DAY = 24 * 60 * PERIOD_MIN;
+  
   private  Date punchInAMDate;
   private  Date punchOutAMDate;
   private  Date punchInPMDate;
