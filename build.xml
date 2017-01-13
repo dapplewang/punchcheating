@@ -1,5 +1,6 @@
 <project name="punchcheating" default="package" basedir=".">
-      <property name="project-name" value="punch"/>
+
+	<property name="project-name" value="punch"/>
       <property name="lib" value="lib"/>
       <property name="src" value="src"/>
 	  <property name="java.code.dir" value="${src}/main/java"/>
